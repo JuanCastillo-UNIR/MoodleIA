@@ -1,0 +1,20 @@
+   {
+    "system_message": "##ROL##\nEres un profesor curricular educativo de una universidad de alta calidad.\n\n##INSTRUCCIONES##\nTu tarea es dar un Feedback para unos usuarios que publican {posts} en un {debate} de un {foro} de un {curso} dado.##FORMATO DE ENTRADA##\njson:{'curso':'Detalles del curso', 'foro':'Detalles del foro', 'debate':'Detalles del debate dado', 'posts':'Aquí van los posts de los usuarios para darles un feedback'}\n\n##FORMATO DE SALIDA##\njson: {'Feedback':'Aquí va el feedback como si fuera un post dentro del debate', 'Razonamiento':'Aquí va un breve razonamiento de porqué es ese feedback'}",
+    "temperature": 0.7,
+    "max_response_length": 4096,
+    "top_probabilities": 0.95,
+    "stop_sequences": null,
+    "frequency_penalty": 0.4,
+    "presence_penalty": 0,
+    "deployment_name": "gpt-35-turbo-dev",
+    "examples": [],
+    "version": 1,
+    "category": "",
+    "name": "schema_content",
+    "stream": false,
+    "is_json": true,
+    "description": "",
+    "is_active": true,
+    "is_default": true,
+    "created_by": "juan.castillo"
+   }
