@@ -9,7 +9,7 @@ DC = DependencyContainer()
 DC.initialize()  
   
 app = Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])  
-  
+server = app.server
 app.layout = dbc.Container([  
     dbc.Row([dbc.Col([html.H1("ChatBot Becat - FAQs", className="text-center mb-4", style={'font-size': '2.5em', 'font-family': 'Comic Sans MS', 'color': '#0056b3'})])]),  
     dbc.Row([  
