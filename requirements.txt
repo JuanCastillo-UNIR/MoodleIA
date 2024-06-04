@@ -7,3 +7,5 @@ dash-bootstrap-components
 dash
 dash-extensions  
 gunicorn
+fastapi==0.108.0
+sqlmodel == 0.0.14
