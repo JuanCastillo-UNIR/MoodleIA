@@ -3,7 +3,7 @@ from src.api.common.services.prompt_service import PromptService
 import json, logging, os
 
 
-class GptContent:
+class GptFAQs:
     _openai_service: OpenAIService
     _prompt_service: PromptService
 
@@ -11,10 +11,10 @@ class GptContent:
         self._openai_service = openai_service
         self._prompt_service = prompt_service
 
-    def get_schema_content(self, content:str):
+    def get_faqs_azure(self, content:str):
         logging.info(f"get_schema_content input question={content}") 
         prompt = self._prompt_service.load_sys_prompt_from_file(
-            os.path.join(os.path.join('notebooks/prompts/prompt.json'))
+            os.path.join(os.path.join('src/api/workflows/FAQs/prompt.json'))
         )
         output = self._openai_service.call_api(
             prompt=prompt,

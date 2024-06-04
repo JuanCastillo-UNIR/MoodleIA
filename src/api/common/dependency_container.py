@@ -3,7 +3,7 @@ from logging import Logger
 from openai import AzureOpenAI
 from src.api.common.services.openai_service import OpenAIService
 from src.api.common.services.prompt_service import PromptService
-from src.api.workflows.contenidos_azure.workflow_content import ContentWorkflow
+from src.api.workflows.FAQs.workflow_faqs import FAQsWorkflow
 from src.common.application_settings import ApplicationSettings
 # from src.api.common.services.observability import Observability
 from src.api.common.services.llm import LLM
@@ -98,9 +98,9 @@ class DependencyContainer:
         return cls._prompt_service
 
     @classmethod
-    def get_schema_generator_workflow(cls) -> ContentWorkflow:
+    def get_schema_generator_workflow(cls) -> FAQsWorkflow:
         logging.info("Creating SchemaWorkflow with dependencies")
-        return ContentWorkflow(
+        return FAQsWorkflow(
             cls.get_openai_service(),
             cls.get_prompt_service(),
         ) 
