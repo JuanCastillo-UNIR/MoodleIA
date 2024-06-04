@@ -43,4 +43,4 @@ def update_chat(n_clicks, user_input):
     return html.Iframe(src=src, style={'width': '100%', 'height': '100%', 'border': 'none', 'font-family': 'Comic Sans MS'}, id='chat_iframe')  
   
 if __name__ == '__main__':  
-    app.run_server(debug=False, port=8080)  
+    app.run_server(debug=False)  
