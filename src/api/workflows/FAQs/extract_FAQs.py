@@ -1,6 +1,5 @@
 import requests  
 from bs4 import BeautifulSoup, Tag  
-from IPython.display import display, HTML  
   
   
 def obtener_faqs():
