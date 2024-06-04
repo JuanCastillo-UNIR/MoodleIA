@@ -36,7 +36,7 @@ def update_chat(n_clicks, user_input):
         return ""  
     request = {'Pregunta': user_input, 'FAQs': obtener_faqs() + obtener_faqs_unir()}  
     response = DC.get_schema_generator_workflow().execute(request)  
-    content = response['Contenido']  
+    content = f"<h2>{response['FAQ correspondiente']}</h2>"+response['Contenido']
     if isinstance(content, bytes):  
         content = content.decode('utf-8')  
     src = f"data:text/html;charset=utf-8,{content}"  
