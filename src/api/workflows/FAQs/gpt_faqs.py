@@ -11,11 +11,14 @@ class GptFAQs:
         self._openai_service = openai_service
         self._prompt_service = prompt_service
 
-    def get_faqs_azure(self, content:str):
+    def get_faqs_azure(self, content:str, evaluador):
         logging.info(f"get_schema_content input question={content}") 
-        prompt = self._prompt_service.load_sys_prompt_from_file(
-            os.path.join(os.path.join('src/api/workflows/FAQs/prompt.json'))
-        )
+        if evaluador: prompt = self._prompt_service.load_sys_prompt_from_file(
+                os.path.join(os.path.join('src/api/workflows/FAQs/prompts/evaluador.json'))
+            )
+        else: prompt = self._prompt_service.load_sys_prompt_from_file(
+                os.path.join(os.path.join('src/api/workflows/FAQs/prompts/prompt.json'))
+            )
         output = self._openai_service.call_api(
             prompt=prompt,
             user_msg=content

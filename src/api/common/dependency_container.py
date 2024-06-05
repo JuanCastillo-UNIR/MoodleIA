@@ -98,7 +98,7 @@ class DependencyContainer:
         return cls._prompt_service
 
     @classmethod
-    def get_schema_generator_workflow(cls) -> FAQsWorkflow:
+    def get_faqs_workflow(cls) -> FAQsWorkflow:
         logging.info("Creating SchemaWorkflow with dependencies")
         return FAQsWorkflow(
             cls.get_openai_service(),
