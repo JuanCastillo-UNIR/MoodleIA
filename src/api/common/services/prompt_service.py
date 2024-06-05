@@ -32,10 +32,17 @@ class PromptService:
         prompt.few_shot_examples = [
             FewShotExample(
                 user_input=example["userInput"],
-                chatbot_response=["chatbotResponse"],
+                chatbot_response=example["chatbotResponse"],
             )  # type: ignore
             for example in prompt_json["examples"]
         ]
+
+        self._logger.debug(
+            "load_sys_prompt output {prompt}",
+            extra={
+                "prompt": str(prompt),
+            },
+        )
         return prompt
 
     def load_sys_prompt_from_db(self, prompt_name: str) -> Prompt:

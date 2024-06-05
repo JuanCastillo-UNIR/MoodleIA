@@ -62,52 +62,6 @@ class OpenAIService:
 
         return ""
 
-    def call_api_stream(
-        self,
-        prompt: Prompt,
-        user_msg: Optional[str] = None,
-        seed: Optional[int] = None,
-    ) -> Generator[str, None, None]:
-        self._logger.debug(
-            "call_api_stream input {system_msg} {user_msg}",
-            extra={"system_msg": prompt.system_message, "user_msg": user_msg},
-        )
-        wait_multiplier: int = 0
-        while wait_multiplier < 4:
-            wait_multiplier += 1
-            self._logger.debug(f"call_api try {wait_multiplier}")
-            try:
-                response = self.get_completion(
-                    prompt,
-                    user_msg,
-                    seed=seed,
-                )
-
-                for chunk in response:
-                    if chunk.choices:  # type: ignore
-                        if chunk.choices[0].delta:  # type: ignore
-                            if chunk.choices[0].delta.content:  # type: ignore
-                                yield chunk.choices[0].delta.content  # type: ignore
-                break
-
-            except Exception as e:
-                if isinstance(e, openai.RateLimitError):
-                    self._logger.error(
-                        "Error in call_api using prompt: " + prompt.name + "\n" + str(e)
-                    )
-                    if wait_multiplier > 3:
-                        yield ""
-                    else:
-                        time.sleep(10 * wait_multiplier)
-                elif isinstance(e, openai.BadRequestError):
-                    self._logger.error(
-                        "Error in call_api using prompt: " + prompt.name + "\n" + str(e)
-                    )
-                    for i in "Error: Vuelve a formular tu mensaje de manera más clara":
-                        yield i
-                else:
-                    raise e
-
     def get_completion(
         self,
         prompt: Prompt,
