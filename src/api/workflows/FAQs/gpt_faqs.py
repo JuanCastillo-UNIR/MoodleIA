@@ -1,6 +1,6 @@
 from src.api.common.services.openai_service import OpenAIService
 from src.api.common.services.prompt_service import PromptService
-import json, logging, os
+import logging, os
 
 
 class GptFAQs:
@@ -20,5 +20,4 @@ class GptFAQs:
             prompt=prompt,
             user_msg=content
         )
-        json_answer = json.loads(str(output))
-        return json_answer
+        return output

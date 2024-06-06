@@ -37,12 +37,10 @@ app.layout = dbc.Container(
 def update_chat(n_clicks, user_input):  
     if user_input is None: return ""  
     request = {'Pregunta': user_input, 'FAQs': faqs + faqs_unir}  
-    response = DependencyContainer.get_faqs_workflow().execute(request)  
-    faq = max(response['FAQs'], key=lambda x: float(x['Score']))       
+    response = DependencyContainer.get_faqs_workflow().execute(request)
+    faq = max(response['FAQs'], key=lambda x: float(x['Score']))
     if float(faq['Score']) > 6: content = f"<h2>{faq['FAQ']}</h2>{faq['Contenido']}"  
-    else:
-        from urllib.parse import quote   
-        content = f'<h2>No encontramos ninguna FAQ relacionada a la pregunta. Dirígete al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323">contacta con un asesor.</a></h2>'
+    else: content = f'<h2>No encontramos ninguna FAQ relacionada a la pregunta. Dirígete al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323">contacta con un asesor.</a></h2>'
     return html.Div(html.Iframe(srcDoc=content, style={'width': '100%', 'height': '500px', 'border': 'none'}))  
   
 if __name__ == '__main__':  
