@@ -4,6 +4,7 @@ from openai import AzureOpenAI
 from src.api.common.services.openai_service import OpenAIService
 from src.api.common.services.prompt_service import PromptService
 from src.api.workflows.FAQs.workflow_faqs import FAQsWorkflow
+from src.api.workflows.Foros.workflow_content import ForosWorkflow
 from src.common.application_settings import ApplicationSettings
 # from src.api.common.services.observability import Observability
 from src.api.common.services.llm import LLM
@@ -101,6 +102,14 @@ class DependencyContainer:
     def get_faqs_workflow(cls) -> FAQsWorkflow:
         logging.info("Creating SchemaWorkflow with dependencies")
         return FAQsWorkflow(
+            cls.get_openai_service(),
+            cls.get_prompt_service(),
+        )
+
+    @classmethod
+    def get_foros_content(cls) -> ForosWorkflow:
+        logging.info("Creating SchemaWorkflow with dependencies")
+        return ForosWorkflow(
             cls.get_openai_service(),
             cls.get_prompt_service(),
         ) 
