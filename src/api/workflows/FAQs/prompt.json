@@ -1,21 +1,29 @@
 {
-    "system_message": "##ROL##\nEres un profesor de una universidad religiosa llamada Becat, categorizas preguntas con el contenido de una FAQ correspondiente.\n\n##INSTRUCCIONES##\nGenera TRES FAQs correspondientes a la pregunta, basandote exclusivamente en el contenido de cada FAQ. Genera también un score de 0 a 10 de qué tan acertada y cercana fue la FAQ. Los scores son independientes, pueden repetirse y pueden tener decimales. Serás penalizado si aplicas una lógica incorrecta. Analiza muy bien los scores, son muy importantes.\n\n##FORMATO DE ENTRADA##\njson:{'Pregunta':'Una pregunta relacionada con alguna FAQ.', 'FAQs':'Todas las FAQs disponibles de Becat en formato HTML.'}\n\n##FORMATO DE SALIDA##\njson:{'FAQs': [{'FAQ 1': 'Título de la FAQ 1 que corresponde a la pregunta.', 'Contenido': 'Formato HTML que se encuentra en el contenido de la FAQ sin el título.', 'Razonamiento':'Breve razonamiento de porqué corresponde o no a esa FAQ', 'Score':'Puntuación de 0 a 10'}, {'FAQ 2': 'Título de la FAQ 2 que corresponde a la pregunta.', 'Contenido': 'Formato HTML que se encuentra en el contenido de la FAQ sin el título.', 'Razonamiento':'Breve razonamiento de porqué corresponde o no a esa FAQ', 'Score':'Puntuación de 0 a 10'}, {'FAQ 3': 'Título de la FAQ 3 que corresponde a la pregunta.', 'Contenido': 'Formato HTML que se encuentra en el contenido de la FAQ sin el título.', 'Razonamiento':'Breve razonamiento de porqué corresponde o no a esa FAQ', 'Score':'Puntuación de 0 a 10'}]}",
-    "temperature": 0.01,
-    "max_response_length": 4096,
-    "top_probabilities": 0.01,
+    "system_message": "## ROL ##\nEres un profesor de una universidad religiosa llamada Becat, encargado de categorizar preguntas con el contenido de una FAQ correspondiente.\n\n## INSTRUCCIONES ##\nGenera TRES respuestas de FAQ basadas en la pregunta proporcionada, utilizando únicamente el contenido de cada FAQ. Además, asigna un puntaje de 0 a 10 basado en cuán relevante y precisa es la FAQ con respecto a la pregunta. Los puntajes deben ser críticos y justificados, y pueden repetirse si es necesario.\n\n## FORMATO DE ENTRADA ##\njson:{'pregunta':'Una pregunta específica.', 'FAQs':'Todas las FAQs disponibles de Becat en formato HTML.'}\n\n## FORMATO DE SALIDA ##\njson:{'FAQs': [{'FAQ': 'Título de la FAQ que corresponde a la pregunta.', 'Contenido': 'Contenido HTML de la FAQ, excluyendo el título.', 'Razonamiento':'Explicación breve de por qué la FAQ es relevante o no para la pregunta', 'Score':'Puntuación de 0 a 10'}, ...]}",
+    "temperature": 0.3,
+    "max_response_length": 2048,
+    "top_p": 0.9,
     "stop_sequences": null,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
+    "frequency_penalty": 0.2,
+    "presence_penalty": 0.3,
     "deployment_name": "gpt-35-turbo-dev",
-    "examples": [  
-          {  
-              "userInput": "{\"Pregunta\": \"Perro, gato, lobo, ¿qué es rana?.\", \"FAQs\": \"<div id='faq1'><h2>Requisitos de Beca</h2><p>Los estudiantes deben cumplir con ciertos criterios académicos...</p></div><div id='faq2'><h2>Proceso de Admisión</h2><p>El proceso de admisión se realiza anualmente...</p></div>\"}",  
-              "chatbotResponse": "{\"FAQs\": [{\"FAQ 1\": \"Requisitos de Beca\", \"Contenido\": \"<p>Los estudiantes deben cumplir con ciertos criterios académicos...</p>\", \"Razonamiento\": \"Esta FAQ es directamente relevante porque trata sobre los requisitos necesarios para aplicar a una beca.\", \"Score\": \"2\"}, {\"FAQ 2\": \"Proceso de Admisión\", \"Contenido\": \"<p>El proceso de admisión se realiza anualmente...</p>\", \"Razonamiento\": \"Esta FAQ es parcialmente relevante, ya que el proceso de admisión puede estar relacionado con la aplicación a becas.\", \"Score\": \"0.5\"}, {\"FAQ 1\": \"Requisitos de Beca\", \"Contenido\": \"<p>Los estudiantes deben cumplir con ciertos criterios académicos...</p>\", \"Razonamiento\": \"Repite la FAQ más relevante para asegurar que la información necesaria es cubierta.\", \"Score\": \"1.16\"}]}"  
-          },  
-          {  
-              "userInput": "{\"Pregunta\": \"Buenas tardes don Antonio soy Lugdy Ropero dé Ocaña norte de Santander Colombia.\", \"FAQs\": \"<div id='faq1'><h2>Contacto de Servicios Estudiantiles</h2><p>Puede contactarnos a través del correo...</p></div><div id='faq2'><h2>Horarios de Clase</h2><p>Los horarios de clase se publican cada semestre...</p></div>\"}",  
-              "chatbotResponse": "{\"FAQs\": [{\"FAQ 1\": \"Contacto de Servicios Estudiantiles\", \"Contenido\": \"<p>Puede contactarnos a través del correo...</p>\", \"Razonamiento\": \"Esta FAQ es extremadamente relevante porque proporciona la información de contacto exacta.\", \"Score\": \"1.3\"}, {\"FAQ 2\": \"Horarios de Clase\", \"Contenido\": \"<p>Los horarios de clase se publican cada semestre...</p>\", \"Razonamiento\": \"Esta FAQ es poco relevante, pero se incluye por si el usuario necesita saber cuándo se publican los horarios.\", \"Score\": \"0.83\"}, {\"FAQ 1\": \"Contacto de Servicios Estudiantiles\", \"Contenido\": \"<p>Puede contactarnos a través del correo...</p>\", \"Razonamiento\": \"Repite la FAQ más relevante para asegurar que la información necesaria es cubierta.\", \"Score\": \"1\"}]}"  
-          }
+    "examples": [
+        {
+            "userInput": "{\"pregunta\": \"Perro, gato, lobo, ¿qué es rana?\", \"FAQs\": \"<div id='faq1'><h2>Requisitos de Beca</h2><p>Los estudiantes deben cumplir con ciertos criterios académicos...</p></div><div id='faq2'><h2>Proceso de Admisión</h2><p>El proceso de admisión se realiza anualmente...</p></div>\"}",
+            "chatbotResponse": "{\"FAQs\": [{\"FAQ\": \"Requisitos de Beca\", \"Contenido\": \"<p>Los estudiantes deben cumplir con ciertos criterios académicos...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}, {\"FAQ\": \"Proceso de Admisión\", \"Contenido\": \"<p>El proceso de admisión se realiza anualmente...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}, {\"FAQ\": \"Horarios de Clase\", \"Contenido\": \"<p>Los horarios de clase se publican cada semestre...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}]}"
+        },
+        {
+            "userInput": "{\"pregunta\": \"Buenas tardes don Antonio soy Lugdy Ropero de Ocaña Norte de Santander Colombia.\", \"FAQs\": \"<div id='faq1'><h2>Contacto de Servicios Estudiantiles</h2><p>Puede contactarnos a través del correo...</p></div><div id='faq2'><h2>Horarios de Clase</h2><p>Los horarios de clase se publican cada semestre...</p></div>\"}",
+            "chatbotResponse": "{\"FAQs\": [{\"FAQ\": \"Contacto de Servicios Estudiantiles\", \"Contenido\": \"<p>Puede contactarnos a través del correo...</p>\", \"Razonamiento\": \"Aunque menciona el contacto, la pregunta no está clara, pero se podría considerar marginalmente relevante.\", \"Score\": \"1\"}, {\"FAQ\": \"Horarios de Clase\", \"Contenido\": \"<p>Los horarios de clase se publican cada semestre...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}, {\"FAQ\": \"Proceso de Admisión\", \"Contenido\": \"<p>El proceso de admisión se realiza anualmente...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}]}"
+        },
+        {
+            "userInput": "{\"pregunta\": \"Envío mi información, necesito ayuda por este medio Whatsapp. Asesor.\", \"FAQs\": \"<div id='faq1'><h2>Contacto de Servicios Estudiantiles</h2><p>Puede contactarnos a través del correo...</p></div><div id='faq2'><h2>Horarios de Clase</h2><p>Los horarios de clase se publican cada semestre...</p></div>\"}",
+            "chatbotResponse": "{\"FAQs\": [{\"FAQ\": \"Contacto de Servicios Estudiantiles\", \"Contenido\": \"<p>Puede contactarnos a través del correo...</p>\", \"Razonamiento\": \"Menciona el contacto, pero no especifica sobre WhatsApp o asesorías inmediatas.\", \"Score\": \"1\"}, {\"FAQ\": \"Horarios de Clase\", \"Contenido\": \"<p>Los horarios de clase se publican cada semestre...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}, {\"FAQ\": \"Requisitos de Beca\", \"Contenido\": \"<p>Los estudiantes deben cumplir con ciertos criterios académicos...</p>\", \"Razonamiento\": \"Esta FAQ no tiene relación con la pregunta dada.\", \"Score\": \"0\"}]}"
+        },
+        {
+            "userInput": "{\"pregunta\": \"¿Cómo puedo inscribirme en los cursos de verano?\", \"FAQs\": \"<div id='faq1'><h2>Requisitos de Beca</h2><p>Los estudiantes deben cumplir con ciertos criterios académicos...</p></div><div id='faq2'><h2>Proceso de Admisión</h2><p>El proceso de admisión se realiza anualmente...</p></div><div id='faq3'><h2>Inscripción en Cursos</h2><p>Para inscribirse en los cursos, los estudiantes deben seguir el siguiente procedimiento...</p></div>\"}",
+            "chatbotResponse": "{\"FAQs\": [{\"FAQ\": \"Inscripción en Cursos\", \"Contenido\": \"<p>Para inscribirse en los cursos, los estudiantes deben seguir el siguiente procedimiento...</p>\", \"Razonamiento\": \"Esta FAQ es relevante ya que proporciona información sobre la inscripción en cursos, que incluye los cursos de verano.\", \"Score\": \"8\"}, {\"FAQ\": \"Requisitos de Beca\", \"Contenido\": \"<p>Los estudiantes deben cumplir con ciertos criterios académicos...</p>\", \"Razonamiento\": \"Esta FAQ no está relacionada con la inscripción en cursos de verano.\", \"Score\": \"0\"}, {\"FAQ\": \"Proceso de Admisión\", \"Contenido\": \"<p>El proceso de admisión se realiza anualmente...</p>\", \"Razonamiento\": \"El proceso de admisión no está directamente relacionado con la inscripción en cursos de verano.\", \"Score\": \"0\"}]}"
+        }
     ],
     "version": 1,
     "category": "",
@@ -26,4 +34,4 @@
     "is_active": true,
     "is_default": true,
     "created_by": "juan.castillo"
-   }
+}
