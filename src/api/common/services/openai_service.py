@@ -1,5 +1,6 @@
 import logging
 import time
+import json
 from typing import Any, Generator, Optional
 
 import openai
@@ -41,8 +42,7 @@ class OpenAIService:
                 self._logger.debug(
                     "call_api output {response}", extra={"response": response}
                 )
-
-                return response.choices[0].message.content  # type: ignore
+                return json.loads(response.choices[0].message.content)
 
             except Exception as e:
                 if isinstance(e, openai.RateLimitError):
