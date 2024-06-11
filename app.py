@@ -39,7 +39,12 @@ def update_chat(n_clicks, user_input):
     request = {'Pregunta': user_input, 'FAQs': faqs + faqs_unir}  
     response = DependencyContainer.get_faqs_workflow().execute(request)
     faq = max(response['FAQs'], key=lambda x: float(x['Score']))
-    if float(faq['Score']) > 6: content = f"<h2>{faq['FAQ']}</h2>{faq['Contenido']}"  
+    if float(faq['Score']) > 5: content = f"<h2>{faq['FAQ']}</h2>{faq['Contenido']}" 
+    if 4 <= float(faq['Score']) <= 5: 
+        content = f"""
+                    <h2>{faq['FAQ']}</h2>{faq['Contenido']}
+                    <h2>Si esta FAQ no se ajusta a tu pregunta, puedes dirigirte al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323">Contacta con un asesor.</a></h2>
+        """
     else: content = f'<h2>No encontramos ninguna FAQ relacionada a la pregunta. Dirígete al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323">contacta con un asesor.</a></h2>'
     return html.Div(html.Iframe(srcDoc=content, style={'width': '100%', 'height': '500px', 'border': 'none'}))  
   

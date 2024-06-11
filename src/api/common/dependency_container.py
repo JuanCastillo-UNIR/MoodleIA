@@ -1,6 +1,6 @@
-import logging
+import logging, json
 from logging import Logger
-from openai import AzureOpenAI
+from openai import AzureOpenAI, OpenAI
 from src.api.common.services.openai_service import OpenAIService
 from src.api.common.services.prompt_service import PromptService
 from src.api.workflows.FAQs.workflow_faqs import FAQsWorkflow
@@ -10,26 +10,33 @@ from src.common.application_settings import ApplicationSettings
 from src.api.common.services.llm import LLM
 from sqlmodel import create_engine
 from sqlalchemy import Engine
-
+from src.domain.entities.general_llm_information import (
+    GeneralLLMInformation,
+    ModelInformation,
+)
 
 class DependencyContainer:
     _LOGGER_NAME = "logger"
-    #_observability: Observability
-    _azure_openai_client: AzureOpenAI
+    # _oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
     _application_settings: ApplicationSettings
     _database_engine: Engine
-    # _observability: Observability
     _openai_service: OpenAIService
+    _azure_openai_service: OpenAIService
+    # _qdrant_service: QdrantService
     _prompt_service: PromptService
-    _llm: LLM
+    _prompt_service: PromptService
+    # _google_service: GoogleService
 
     @classmethod
     def initialize(cls) -> None:
         cls._initialize_application_settings()
         # cls._initialize_application_insights()
         cls._initialize_database_engine()
+        cls._initialize_azure_openai_service()
         cls._initialize_openai_service()
         cls._initialize_prompt_service()
+        # cls._initialize_qdrant_service()
+        # cls._initialize_google_service()
         # cls._initialize_observability()
         # cls._initialize_llm_manager()
     
@@ -59,8 +66,18 @@ class DependencyContainer:
         return cls._database_engine
     
     @classmethod
+    def get_openai_engine(cls) -> OpenAI:
+        return OpenAI(
+            api_key=cls._application_settings.OPEN_AI__OAI_API_KEY,
+        )
+    
+    @classmethod
     def get_azure_openai_engine(cls) -> AzureOpenAI:
-        return cls._azure_openai_client
+        return AzureOpenAI(
+            api_key=cls._application_settings.OPEN_AI__API_KEY,
+            api_version=cls._application_settings.OPEN_AI__API_VERSION,
+            azure_endpoint=cls._application_settings.OPEN_AI__AZURE_ENDPOINT,
+        )
 
     @classmethod
     def _initialize_database_engine(cls) -> None:
@@ -69,18 +86,17 @@ class DependencyContainer:
         # cls._database_engine = create_engine(url=url, echo=False)
     
     @classmethod
-    def _initialize_openai_service(cls) -> None:
-        cls._openai_service = OpenAIService(
+    def _initialize_azure_openai_service(cls) -> None:
+        cls._azure_openai_service = OpenAIService(
             logger=cls.get_logger(),
             openai_client=cls.get_azure_openai_engine(),
         )
-
+    
     @classmethod
-    def get_azure_openai_engine(cls) -> AzureOpenAI:
-        return AzureOpenAI(
-            api_key=cls._application_settings.OPEN_AI__API_KEY,
-            api_version=cls._application_settings.OPEN_AI__API_VERSION,
-            azure_endpoint=cls._application_settings.OPEN_AI__AZURE_ENDPOINT,
+    def _initialize_openai_service(cls) -> None:
+        cls._openai_service = OpenAIService(
+            logger=cls.get_logger(),
+            openai_client=cls.get_openai_engine(),
         )
 
     @classmethod
@@ -97,6 +113,18 @@ class DependencyContainer:
     @classmethod
     def get_prompt_service(cls) -> PromptService:
         return cls._prompt_service
+
+    @classmethod
+    def get_llm_information(cls) -> GeneralLLMInformation:
+        heavy_dict: dict[str, str] = json.loads(
+            cls._application_settings.LLM__INFORMATION_HEAVY
+        )
+        light_dict: dict[str, str] = json.loads(
+            cls._application_settings.LLM__INFORMATION_LIGHT
+        )
+        heavy: ModelInformation = ModelInformation(**heavy_dict)
+        light: ModelInformation = ModelInformation(**light_dict)
+        return GeneralLLMInformation(heavy=heavy, light=light)
 
     @classmethod
     def get_faqs_workflow(cls) -> FAQsWorkflow:

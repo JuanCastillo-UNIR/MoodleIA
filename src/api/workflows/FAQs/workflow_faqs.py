@@ -13,4 +13,4 @@ class FAQsWorkflow:
         self._openai_service = GptFAQs(openai_service, prompt_service)
 
     def execute(self, request: str) -> dict: 
-        return self._openai_service.get_faqs_azure(str(request))
+        return self._openai_service.get_faqs_azure(str(request), get_prompt_from_file=True)
