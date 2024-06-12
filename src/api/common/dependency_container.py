@@ -34,7 +34,7 @@ class DependencyContainer:
     @classmethod
     def initialize(cls) -> None:
         cls._initialize_application_settings()
-        cls._initialize_database_engine()
+        # cls._initialize_database_engine()
         cls._initialize_azure_openai_service()
         cls._initialize_openai_service()
         cls._initialize_prompt_service()
@@ -44,13 +44,9 @@ class DependencyContainer:
         return cls._application_settings
 
     @classmethod
-    def get_database_engine(cls) -> Engine:
-        return cls._database_engine
-
-    @classmethod
     def get_openai_engine(cls) -> OpenAI:
         return OpenAI(
-            api_key=cls._application_settings.OPEN_AI__OAI_API_KEY,
+            api_key=cls._application_settings.OPEN_AI__API_KEY,
         )
 
     @classmethod
@@ -125,11 +121,6 @@ class DependencyContainer:
         cls._application_settings = ApplicationSettings()  # type: ignore
 
     @classmethod
-    def _initialize_database_engine(cls) -> None:
-        url = cls._application_settings.SQL_SERVER__CONNECTION_STRING
-        cls._database_engine = create_engine(url=url, echo=False)
-
-    @classmethod
     def _initialize_openai_service(cls) -> None:
         cls._openai_service = OpenAIService(
             logger=cls.get_logger(),
@@ -147,7 +138,6 @@ class DependencyContainer:
     def _initialize_prompt_service(cls) -> None:
         cls._prompt_service = PromptService(
             logger=cls.get_logger(),
-            sql_engine=cls.get_database_engine(),
         )
 
     @classmethod

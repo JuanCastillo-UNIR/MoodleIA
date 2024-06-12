@@ -13,7 +13,7 @@ class PromptService:
     _database_engine: Engine
 
     def __init__(
-        self, logger: logging.Logger, sql_engine: Engine
+        self, logger: logging.Logger, sql_engine: Engine = None
     ) -> None:
         self._logger = logger
         self._database_engine = sql_engine
