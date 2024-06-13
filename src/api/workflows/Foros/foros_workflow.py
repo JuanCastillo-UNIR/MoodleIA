@@ -15,7 +15,7 @@ class ForosWorkflow:
         self._openai_service = GptContent(openai_service, prompt_service)
 
     def entrada_token_discussionid(self):
-        wstoken = '45f9a0919829222c62f4b0314a8da6fb'
+        wstoken = '8c4b7d7f49bc9db13536925e3e2d74ca'
         discussionid = 1
         return wstoken, discussionid
 

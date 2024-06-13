@@ -148,11 +148,3 @@ class DependencyContainer:
             cls.get_openai_service(),
             cls.get_prompt_service(),
         )
-    
-    @classmethod
-    def get_foros_workflow(cls) -> ForosWorkflow:
-        logging.info("Creating ForosWorkflow with dependencies")
-        return ForosWorkflow(
-            cls.get_openai_service(),
-            cls.get_prompt_service(),
-        )

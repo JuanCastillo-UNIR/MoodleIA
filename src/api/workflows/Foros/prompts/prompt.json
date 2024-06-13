@@ -6,7 +6,7 @@
    "stop_sequences": null,
    "frequency_penalty": 0.4,
    "presence_penalty": 0,
-   "deployment_name": "gpt-35-turbo-dev",
+   "deployment_name": "gpt-4o",
    "examples": [],
    "version": 1,
    "category": "",
