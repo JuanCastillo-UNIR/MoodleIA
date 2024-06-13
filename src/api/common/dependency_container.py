@@ -11,6 +11,7 @@ from openai import AzureOpenAI, OpenAI
 from sqlalchemy import Engine
 from sqlmodel import create_engine
 
+from src.api.workflows.Foros.foros_workflow import ForosWorkflow
 from src.api.common.services.openai_service import OpenAIService
 from src.api.common.services.prompt_service import PromptService
 from src.common.application_settings import ApplicationSettings
@@ -144,6 +145,14 @@ class DependencyContainer:
     def get_faqs_workflow(cls) -> FAQsWorkflow:
         logging.info("Creating SchemaWorkflow with dependencies")
         return FAQsWorkflow(
+            cls.get_openai_service(),
+            cls.get_prompt_service(),
+        )
+    
+    @classmethod
+    def get_foros_workflow(cls) -> ForosWorkflow:
+        logging.info("Creating ForosWorkflow with dependencies")
+        return ForosWorkflow(
             cls.get_openai_service(),
             cls.get_prompt_service(),
         )
