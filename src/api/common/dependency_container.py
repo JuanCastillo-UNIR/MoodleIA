@@ -1,11 +1,8 @@
 import json
 import logging
 from logging import Logger
-from typing import Annotated
 
-import jwt
 from src.api.workflows.FAQs.workflow_faqs import FAQsWorkflow
-from fastapi import Security, status
 from fastapi.security import OAuth2PasswordBearer
 from openai import AzureOpenAI, OpenAI
 from sqlalchemy import Engine
@@ -99,22 +96,6 @@ class DependencyContainer:
     def get_logger(cls) -> Logger:
         logger = logging.getLogger(cls._LOGGER_NAME)
         return logger
-
-    @classmethod
-    def validate_identity(
-        cls,
-        encoded_jwt: Annotated[str, Security(_oauth2_scheme)],
-    ) -> None:
-        try:
-            jwt.decode(
-                jwt=encoded_jwt,
-                key=cls._application_settings.GLOBAL__SECURITY__JWT__KEY,
-                algorithms=[cls._application_settings.GLOBAL__SECURITY__JWT__ALGORITHM],
-                issuer=cls._application_settings.GLOBAL__SECURITY__JWT__ISSUER,
-                audience=cls._application_settings.GLOBAL__SECURITY__JWT__AUDIENCE,
-            )
-        except jwt.InvalidTokenError:
-            raise BusinessError(status_code=status.HTTP_401_UNAUTHORIZED)
 
     @classmethod
     def _initialize_application_settings(cls) -> None:

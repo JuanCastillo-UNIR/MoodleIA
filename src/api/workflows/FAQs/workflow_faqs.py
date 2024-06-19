@@ -12,5 +12,16 @@ class FAQsWorkflow:
     ) -> None:
         self._openai_service = GptFAQs(openai_service, prompt_service)
 
-    def execute(self, request: str) -> dict: 
-        return self._openai_service.get_faqs_azure(str(request), get_prompt_from_file=True)
+    def execute(self, request: str, faqs:str) -> str: 
+        request = {'Pregunta': request, 'FAQs': faqs}  
+        response = self._openai_service.get_faqs_azure(str(request))
+        faq = max(response['FAQs'], key=lambda x: float(x['Score']))
+        if float(faq['Score']) >= 7: content = f"<h2>{faq['FAQ']}</h2>{faq['Contenido']}" 
+        if 4 < float(faq['Score']) < 7: 
+            content = f"""
+                        <h2>{faq['FAQ']}</h2>{faq['Contenido']}
+                        <h2>Si esta FAQ no se ajusta a tu pregunta, puedes dirigirte al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323">Contacta con un asesor.</a></h2>
+            """
+        if float(faq['Score']) <= 4: content = f'<h2>No encontramos ninguna FAQ relacionada a la pregunta. Dirígete al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323">contacta con un asesor.</a></h2>'
+        return content
+      

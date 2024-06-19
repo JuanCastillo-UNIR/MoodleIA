@@ -1,0 +1,100 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 30%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#chat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.user-message, .bot-message {
+    width: fit-content;
+    border-radius: 20px; /* Crea bordes redondeados para las burbujas de mensajes */
+    padding: 10px 15px; /* Añade un poco más de padding para un mejor espacio */
+}
+
+.user-message {
+    background-color: rgb(161, 229, 231); /* Color de fondo para el mensaje del usuario */
+    margin-left: auto; /* Empuja la burbuja del usuario hacia la derecha */
+    margin-right: 10px; /* Margen derecho para la burbuja del usuario */
+}
+
+.bot-message {
+    background-color: #f8c4c4; /* Color de fondo para el mensaje del bot */
+    margin-left: 10px; /* Margen izquierdo para la burbuja del bot */
+}
+
+.bot-message img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.minimized {
+    height: 40px;
+}
+
+.minimized #chat-content {
+    display: none;
+}

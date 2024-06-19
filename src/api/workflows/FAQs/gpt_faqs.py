@@ -11,7 +11,7 @@ class GptFAQs:
         self._openai_service = openai_service
         self._prompt_service = prompt_service
 
-    def get_faqs_azure(self, content:str, get_prompt_from_file: bool = False):
+    def get_faqs_azure(self, content:str, get_prompt_from_file: bool = True):
         logging.info(f"get_schema_content input question={content}") 
         prompt_name = "prompt"
         if get_prompt_from_file:
@@ -22,8 +22,7 @@ class GptFAQs:
                     f"{prompt_name}.json",
                 )
             )
-        else:
-            prompt = self._prompt_service.load_sys_prompt_from_db(prompt_name)
+        else: prompt = self._prompt_service.load_sys_prompt_from_db(prompt_name)
         output = self._openai_service.call_api(
             prompt=prompt,
             user_msg=content
