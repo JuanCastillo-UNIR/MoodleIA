@@ -1,8 +1,12 @@
 async function sendMessage() {
     const userInputElement = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
     const userInputValue = userInputElement.value.trim();
-    
+
     if (userInputValue === '') return;
+
+    // Cambiar el botón a estado de carga
+    toggleLoadingButton(true);
 
     const chatBox = document.getElementById('chat-box');
     const userMessage = document.createElement('div');
@@ -36,6 +40,20 @@ async function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+    } finally {
+        // Restaurar el botón a su estado original
+        toggleLoadingButton(false);
+    }
+}
+
+function toggleLoadingButton(isLoading) {
+    const sendButton = document.getElementById('send-button');
+    if (isLoading) {
+        sendButton.classList.add('loading');
+        sendButton.disabled = true;
+    } else {
+        sendButton.classList.remove('loading');
+        sendButton.disabled = false;
     }
 }
 
