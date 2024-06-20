@@ -1,4 +1,4 @@
-import uvicorn
+import uvicorn, os
 
 if not __name__.startswith("__mp"):
     from fastapi import FastAPI, Request
@@ -11,8 +11,10 @@ if not __name__.startswith("__mp"):
     DependencyContainer.initialize()
     
     app = FastAPI(title="Chatbot FAQs Becat", version="1.0.0")
-    app.mount("/server", StaticFiles(directory="server"), name="server")
-    templates = Jinja2Templates(directory="server")
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    static_files_directory = os.path.join(current_directory, 'server')
+    app.mount(path="/server", app=StaticFiles(directory=static_files_directory), name='server')
+    templates = Jinja2Templates(directory=static_files_directory)
     @app.get("/", response_class=HTMLResponse)
     async def index(request: Request):
         return templates.TemplateResponse("index.html", {"request": request})
