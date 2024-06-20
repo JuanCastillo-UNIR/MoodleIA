@@ -1,5 +1,5 @@
-from src.api.common.services.openai_service import OpenAIService
-from src.api.common.services.prompt_service import PromptService
+from api.common.services.openai_service import OpenAIService
+from api.common.services.prompt_service import PromptService
 import logging, os, json
 
 

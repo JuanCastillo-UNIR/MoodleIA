@@ -2,17 +2,14 @@ import json
 import logging
 from logging import Logger
 
-from src.api.workflows.FAQs.workflow_faqs import FAQsWorkflow
+from api.workflows.FAQs.workflow_faqs import FAQsWorkflow
 from fastapi.security import OAuth2PasswordBearer
 from openai import AzureOpenAI, OpenAI
-from sqlalchemy import Engine
-from sqlmodel import create_engine
 
-from src.api.common.services.openai_service import OpenAIService
-from src.api.common.services.prompt_service import PromptService
-from src.common.application_settings import ApplicationSettings
-from src.common.business_error import BusinessError
-from src.domain.entities.general_llm_information import (
+from api.common.services.openai_service import OpenAIService
+from api.common.services.prompt_service import PromptService
+from common.application_settings import ApplicationSettings
+from domain.entities.general_llm_information import (
     GeneralLLMInformation,
     ModelInformation,
 )
@@ -22,7 +19,6 @@ class DependencyContainer:
     _LOGGER_NAME = "logger"
     _oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
     _application_settings: ApplicationSettings
-    _database_engine: Engine
     _openai_service: OpenAIService
     _azure_openai_service: OpenAIService
     _prompt_service: PromptService
@@ -31,7 +27,6 @@ class DependencyContainer:
     @classmethod
     def initialize(cls) -> None:
         cls._initialize_application_settings()
-        # cls._initialize_database_engine()
         cls._initialize_azure_openai_service()
         cls._initialize_openai_service()
         cls._initialize_prompt_service()

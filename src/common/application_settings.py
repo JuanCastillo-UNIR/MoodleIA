@@ -6,8 +6,8 @@ from pydantic_settings import (
     SettingsConfigDict,
 )
 
-from src.common.app_configuration_settings_source import AppConfigurationSettingsSource
-from src.common.app_environment import AppEnvironment
+# from common.app_configuration_settings_source import AppConfigurationSettingsSource
+from common.app_environment import AppEnvironment
 
 class ApplicationSettings(BaseSettings):
     model_config = SettingsConfigDict(

@@ -6,7 +6,7 @@ import openai
 from openai import AzureOpenAI, OpenAI, Stream
 from openai.types.chat import ChatCompletion, ChatCompletionChunk
 
-from src.domain.entities.models import Prompt
+from domain.entities.models import Prompt
 
 
 class OpenAIService:

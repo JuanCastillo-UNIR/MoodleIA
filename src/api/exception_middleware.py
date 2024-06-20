@@ -4,7 +4,7 @@ from fastapi import HTTPException, Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.types import ASGIApp
 
-from src.api.common.dependency_container import DependencyContainer
+from api.common.dependency_container import DependencyContainer
 
 
 class ExceptionMiddleware(BaseHTTPMiddleware):

@@ -1,6 +1,6 @@
-from src.api.common.services.openai_service import OpenAIService
-from src.api.common.services.prompt_service import PromptService
-from src.api.workflows.FAQs.gpt_faqs import GptFAQs
+from api.common.services.openai_service import OpenAIService
+from api.common.services.prompt_service import PromptService
+from api.workflows.FAQs.gpt_faqs import GptFAQs
 
 
 class FAQsWorkflow:

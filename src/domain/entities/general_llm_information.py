@@ -1,7 +1,5 @@
 from pydantic import BaseModel
-
-from src.domain.entities.model_information import ModelInformation
-
+from domain.entities.model_information import ModelInformation
 
 class GeneralLLMInformation(BaseModel):
     heavy: ModelInformation

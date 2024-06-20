@@ -5,7 +5,7 @@ from sqlalchemy import Engine
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select
 
-from src.domain.entities.models import FewShotExample, LLMModel, Prompt
+from domain.entities.models import FewShotExample, LLMModel, Prompt
 
 
 class PromptService:
