@@ -1,20 +1,13 @@
 async function sendMessage() {
     const userInputElement = document.getElementById('user-input');
-    const sendButton = document.getElementById('send-button');
     const userInputValue = userInputElement.value.trim();
-
     if (userInputValue === '') return;
-
-    // Cambiar el botón a estado de carga
     toggleLoadingButton(true);
-
     const chatBox = document.getElementById('chat-box');
     const userMessage = document.createElement('div');
     userMessage.textContent = userInputValue;
     userMessage.classList.add('user-message');
     chatBox.appendChild(userMessage);
-
-    // Clear the input field and maintain focus
     userInputElement.value = '';
     userInputElement.focus();
 
@@ -26,22 +19,28 @@ async function sendMessage() {
             },
             body: JSON.stringify({ message: userInputValue }),
         });
-
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
 
-        const data = await response.text();
-        const botMessage = document.createElement('div');
-        botMessage.innerHTML = data;
-        botMessage.classList.add('bot-message');
-        chatBox.appendChild(botMessage);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let botMessageContent = "";
 
-        chatBox.scrollTop = chatBox.scrollHeight;
+        const botMessageContainer = document.createElement('div');
+        botMessageContainer.classList.add('bot-message');
+        chatBox.appendChild(botMessageContainer);
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            botMessageContent += decoder.decode(value, { stream: true });
+            botMessageContainer.innerHTML = botMessageContent;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     } finally {
-        // Restaurar el botón a su estado original
         toggleLoadingButton(false);
     }
 }
@@ -65,6 +64,6 @@ function toggleChat() {
     if (chatContainer.classList.contains('minimized')) {
         toggleButton.textContent = '+';
     } else {
-        toggleButton.textContent = '−';
+        toggleButton.textContent = '-';
     }
 }

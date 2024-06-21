@@ -63,7 +63,6 @@ class OpenAIService:
     def call_api_stream(
         self,
         prompt: Prompt,
-        model: str,
         user_msg: Optional[str] = None,
         seed: Optional[int] = None,
     ) -> Generator[str, None, None]:
@@ -78,11 +77,9 @@ class OpenAIService:
             try:
                 response = self.get_completion(
                     prompt,
-                    model,
                     user_msg,
                     seed=seed,
                 )
-
                 for chunk in response:
                     if chunk.choices:  # type: ignore
                         if chunk.choices[0].delta:  # type: ignore

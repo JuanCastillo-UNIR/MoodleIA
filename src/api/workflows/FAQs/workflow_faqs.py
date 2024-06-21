@@ -17,6 +17,4 @@ class FAQsWorkflow:
             import time; time.sleep(1)
             return f'<h2>Dirígete al siguiente número de Whatsapp: <a href="https://web.whatsapp.com/send?phone=34689909323&text=%C2%A1Hola!%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre...">Contacta con un asesor.</a></h2>'
         request = {'Pregunta': request, 'FAQs': faqs}  
-        response = self._openai_service.get_faqs_azure(str(request))
-        faq = max(response['FAQs'], key=lambda x: float(x['Score']))
-        return f"<h2>{faq['FAQ']}</h2>{faq['Contenido']}" 
+        return self._openai_service.get_faqs_azure(str(request))

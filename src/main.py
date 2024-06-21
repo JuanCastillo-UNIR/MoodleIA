@@ -1,3 +1,5 @@
+import asyncio
+from fastapi.responses import StreamingResponse
 import uvicorn, os
 
 if not __name__.startswith("__mp"):
@@ -18,11 +20,15 @@ if not __name__.startswith("__mp"):
     @app.get("/", response_class=HTMLResponse)
     async def index(request: Request):
         return templates.TemplateResponse("index.html", {"request": request})
-    @app.post("/chat", response_class=HTMLResponse)
+    async def async_generator_sync(generator):
+        for item in generator:
+            yield item
+            await asyncio.sleep(0.01)  # Yield control to the event loop
+    @app.post("/chat")
     async def get_response_faqs(request: Request) -> HTMLResponse:
-        request = await request.json()
-        response = DependencyContainer.get_faqs_workflow().execute(request.get('message'), faqs + faqs_unir)
-        return HTMLResponse(content=response)
+        request_data = await request.json()
+        response_generator = DependencyContainer.get_faqs_workflow().execute(request_data.get('message'), faqs + faqs_unir)
+        return StreamingResponse(async_generator_sync(response_generator), media_type="text/html")
 
 if __name__ == '__main__':
     uvicorn.run(app="main:app", host="127.0.0.1", port=10000, reload=True)
