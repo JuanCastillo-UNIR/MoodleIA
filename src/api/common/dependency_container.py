@@ -2,7 +2,7 @@ import json
 import logging
 from logging import Logger
 
-from api.workflows.FAQs.workflow_faqs import FAQsWorkflow
+from api.workflows.FAQs.faqs_workflow import FAQsWorkflow
 from fastapi.security import OAuth2PasswordBearer
 from openai import AzureOpenAI, OpenAI
 
@@ -117,7 +117,7 @@ class DependencyContainer:
         )
 
     @classmethod
-    def get_faqs_workflow(cls) -> FAQsWorkflow:
+    def faqs_workflow(cls) -> FAQsWorkflow:
         logging.info("Creating SchemaWorkflow with dependencies")
         return FAQsWorkflow(
             cls.get_openai_service(),

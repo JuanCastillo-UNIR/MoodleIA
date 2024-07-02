@@ -1,6 +1,6 @@
 from api.common.services.openai_service import OpenAIService
 from api.common.services.prompt_service import PromptService
-import logging, os, json
+import logging, os
 
 
 class GptFAQs:
@@ -13,7 +13,7 @@ class GptFAQs:
 
     def get_faqs_azure(self, content:str, get_prompt_from_file: bool = True):
         logging.info(f"get_schema_content input question={content}") 
-        prompt_name = "prompt_html"
+        prompt_name = "prompt_david"
         if get_prompt_from_file:
             prompt = self._prompt_service.load_sys_prompt_from_file(
                 os.path.join(
@@ -23,7 +23,7 @@ class GptFAQs:
                 )
             )
         else: prompt = self._prompt_service.load_sys_prompt_from_db(prompt_name)
-        output = self._openai_service.call_api_stream(
+        output = self._openai_service.call_api(
             prompt=prompt,
             user_msg=content
         )

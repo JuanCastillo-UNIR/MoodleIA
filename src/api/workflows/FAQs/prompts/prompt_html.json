@@ -11,7 +11,7 @@
     "version": 1,
     "category": "",
     "name": "faqs_generator",
-    "stream": true,
+    "stream": false,
     "is_json": false,
     "description": "",
     "is_active": true,
