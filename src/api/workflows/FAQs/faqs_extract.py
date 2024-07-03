@@ -16,7 +16,7 @@ class FAQsExtract:
             self.last_time_extracted = datetime.now().strftime('%Y-%m-%d %H:%M:%S') 
         return self.FAQs
     
-    def faqs_scraping(self):  
+    def faqs_scraping(self): 
         faqs = ''  
         soup = bs4.BeautifulSoup(requests.get('https://becat.online/FAQ/').content, 'html.parser')  
         for accordion in soup.select('#accordion h3'):  

@@ -5,7 +5,7 @@ from fastapi import APIRouter, Response
 
 router = APIRouter(prefix="/FAQs", tags=["FAQs"])
 
-@router.post("/get_FAQs")
+@router.get("/get_FAQs")
 async def get_FAQs() -> Response:
     return DependencyContainer.faqs_workflow().get_FAQs()
 
