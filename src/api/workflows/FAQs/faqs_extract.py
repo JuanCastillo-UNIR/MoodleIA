@@ -1,17 +1,22 @@
-import requests  
-import bs4  
 from datetime import datetime, timedelta  
-  
+import requests, bs4  
+
+
 class FAQsExtract:  
     FAQs: str  
     last_time_extracted: str = None  
   
-    def __init__(self):  
+    def __init__(self):
+        self.FAQs = self.faqs_scraping()  
+        self.last_time_extracted = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  
+
+    def get_faqs(self):
         if self.last_time_extracted is None or self.needs_update():  
-            self.obtener_faqs()  
-            self.last_time_extracted = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  
-  
-    def obtener_faqs(self):  
+            self.FAQs = self.faqs_scraping()  
+            self.last_time_extracted = datetime.now().strftime('%Y-%m-%d %H:%M:%S') 
+        return self.FAQs
+    
+    def faqs_scraping(self):  
         faqs = ''  
         soup = bs4.BeautifulSoup(requests.get('https://becat.online/FAQ/').content, 'html.parser')  
         for accordion in soup.select('#accordion h3'):  
@@ -29,11 +34,11 @@ class FAQsExtract:
                             link['href'] = self.ensure_absolute_url(link['href'])  
                     content += str(element)  
             faqs += f"<h2>{title}</h2><div>{content}</div>"  
-        self.FAQs = faqs  
+        return faqs  
   
     def ensure_absolute_url(self, url):  
         return url if url.startswith('http') else f"https://becat.online/FAQ/{url}"  
   
     def needs_update(self):  
-        last_date = datetime.strptime(self.last_time_extracted, '%Y-%m-%d %H:%M:%S')  
+        last_date = datetime.strptime(self.last_time_extracted, '%Y-%m-%d %H:%M:%S') 
         return datetime.now() >= last_date + timedelta(days=5)  
