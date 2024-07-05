@@ -9,6 +9,6 @@ router = APIRouter(prefix="/FAQs", tags=["FAQs"])
 async def get_FAQs() -> Response:
     return DependencyContainer.faqs_workflow().get_FAQs()
 
-@router.get("/IA_FAQs")
+@router.post("/IA_FAQs")
 async def IA_FAQs(request: FAQsRequest) -> Response:
     return DependencyContainer.faqs_workflow().IA_FAQs(request.pregunta, request.FAQs)
